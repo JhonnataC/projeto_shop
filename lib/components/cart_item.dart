@@ -3,10 +3,10 @@ import 'package:projeto_shop/models/cart.dart';
 import 'package:projeto_shop/models/cart_item_model.dart';
 import 'package:provider/provider.dart';
 
-class CartItem extends StatelessWidget {
-  final CartItemModel cartItem;
+class CartItemWidget extends StatelessWidget {
+  final CartItem cartItem;
 
-  const CartItem({
+  const CartItemWidget({
     super.key,
     required this.cartItem,
   });

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_shop/components/mt_badge.dart';
+import 'package:projeto_shop/components/my_drawer.dart';
 import 'package:projeto_shop/components/product_grid.dart';
 import 'package:projeto_shop/models/cart.dart';
 import 'package:projeto_shop/utils/app_routes.dart';
@@ -57,9 +58,10 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
               value: cart.itemsCount().toString(),
               child: child!,
             ),
-          )
+          ),
         ],
       ),
+      drawer: const MyDrawer(),
       body: ProductGrid(_showFavoriteItems),
     );
   }

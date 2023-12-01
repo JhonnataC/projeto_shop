@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_shop/components/cart_item.dart';
 import 'package:projeto_shop/models/cart.dart';
+import 'package:projeto_shop/models/order_list.dart';
 import 'package:provider/provider.dart';
 
 class CartScreen extends StatelessWidget {
@@ -31,7 +32,8 @@ class CartScreen extends StatelessWidget {
                   Chip(
                     backgroundColor: Theme.of(context).colorScheme.primary,
                     shape: ContinuousRectangleBorder(
-                        borderRadius: BorderRadius.circular(25)),
+                      borderRadius: BorderRadius.circular(25),
+                    ),
                     label: Text(
                       'R\$ ${cart.totalAmount.toStringAsFixed(2)}',
                       style: const TextStyle(
@@ -43,7 +45,11 @@ class CartScreen extends StatelessWidget {
                   ),
                   const Spacer(),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Provider.of<OrderList>(context, listen: false)
+                          .addOrder(cart);
+                      cart.clear();
+                    },
                     child: const Text(
                       'COMPRAR',
                       style: TextStyle(
@@ -59,7 +65,8 @@ class CartScreen extends StatelessWidget {
           Expanded(
             child: ListView.builder(
               itemCount: items.length,
-              itemBuilder: (context, index) => CartItem(cartItem: items[index]),
+              itemBuilder: (context, index) =>
+                  CartItemWidget(cartItem: items[index]),
             ),
           ),
         ],

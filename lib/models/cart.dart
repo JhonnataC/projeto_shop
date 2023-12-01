@@ -5,15 +5,15 @@ import 'package:projeto_shop/models/cart_item_model.dart';
 import 'package:projeto_shop/models/product.dart';
 
 class Cart with ChangeNotifier {
-  Map<String, CartItemModel> _items = {};
+  Map<String, CartItem> _items = {};
 
-  Map<String, CartItemModel> get items => {..._items};
+  Map<String, CartItem> get items => {..._items};
 
   void addItem(Product product) {
     if (_items.containsKey(product.id)) {
       _items.update(
         product.id,
-        (oldItem) => CartItemModel(
+        (oldItem) => CartItem(
           id: oldItem.id,
           productId: oldItem.id,
           name: oldItem.name,
@@ -24,7 +24,7 @@ class Cart with ChangeNotifier {
     } else {
       _items.putIfAbsent(
         product.id,
-        () => CartItemModel(
+        () => CartItem(
           id: Random().nextDouble().toString(),
           productId: product.id,
           name: product.name,

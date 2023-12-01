@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// feito apenas para teste
 class CounterState {
   int _value = 0;
 
