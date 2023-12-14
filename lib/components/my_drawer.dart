@@ -42,6 +42,14 @@ class MyDrawer extends StatelessWidget {
               AppRoutes.ORDERS_SCREEN,
             ),
           ),
+          const Divider(),
+          _itemDrawer(
+            Icons.edit,
+            'Manage Products',
+            () => Navigator.of(context).pushReplacementNamed(
+              AppRoutes.PRODUCTS_SCREEN,
+            ),
+          ),
         ],
       ),
     );
