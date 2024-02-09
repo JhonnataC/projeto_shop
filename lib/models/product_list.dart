@@ -1,11 +1,17 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:projeto_shop/data/dummy_data.dart';
+import 'package:http/http.dart' as http;
 import 'package:projeto_shop/models/product.dart';
+import 'package:projeto_shop/utils/constants.dart';
+import 'package:projeto_shop/exceptions/http_exception.dart';
 
 class ProductList with ChangeNotifier {
-  List<Product> _items = dummyProducts;
+  final urlBase = Constants.productsUrlBase;
+
+  // ignore: prefer_final_fields
+  List<Product> _items = [];
 
   List<Product> get items => [..._items];
 
@@ -14,7 +20,30 @@ class ProductList with ChangeNotifier {
 
   int get itemsCount => _items.length;
 
-  void saveProduct(Map<String, Object> data) {
+  Future<void> loadProducts() async {
+    final response = await http.get(Uri.parse('$urlBase.json'));
+    if (response.body == 'null') return;
+
+    _items.clear();
+
+    Map<String, dynamic> data = jsonDecode(response.body);
+
+    data.forEach((productId, productData) {
+      _items.add(
+        Product(
+          id: productId,
+          name: productData['name'],
+          description: productData['description'],
+          price: productData['price'],
+          imageUrl: productData['imageUrl'],
+          isFavorite: productData['isFavorite'],
+        ),
+      );
+    });
+    notifyListeners();
+  }
+
+  Future<void> saveProduct(Map<String, Object> data) {
     bool hasId = data['id'] != null;
 
     final product = Product(
@@ -26,53 +55,76 @@ class ProductList with ChangeNotifier {
     );
 
     if (hasId) {
-      updateProduct(product);
+      return updateProduct(product);
     } else {
-      addProduct(product);
+      return addProduct(product);
     }
   }
 
-  void addProduct(Product product) {
-    _items.add(product);
+  Future<void> addProduct(Product product) async {
+    final response = await http.post(
+      Uri.parse('$urlBase.json'),
+      body: jsonEncode({
+        'name': product.name,
+        'description': product.description,
+        'price': product.price,
+        'imageUrl': product.imageUrl,
+        'isFavorite': product.isFavorite,
+      }),
+    );
+
+    final id = jsonDecode(response.body)['name'];
+    _items.add(Product(
+      id: id,
+      name: product.name,
+      description: product.description,
+      price: product.price,
+      imageUrl: product.imageUrl,
+      isFavorite: product.isFavorite,
+    ));
     notifyListeners();
   }
 
-  void updateProduct(Product product) {
+  Future<void> updateProduct(Product product) async {
     // indexWhere retorna um inteiro, no caso, o index onde ocorre a tal condicao
     // caso nao encontre nada que siga a condicao, ela irá retornar -1.
     int index = _items.indexWhere((prod) => prod.id == product.id);
 
     if (index >= 0) {
+      await http.patch(
+        Uri.parse('$urlBase/${product.id}.json'),
+        body: jsonEncode({
+          'name': product.name,
+          'description': product.description,
+          'price': product.price,
+          'imageUrl': product.imageUrl,
+        }),
+      );
       _items[index] = product;
       notifyListeners();
     }
   }
 
-  void removeProduct(Product product) {
+  Future<void> removeProduct(Product product) async {
     int index = _items.indexWhere((prod) => prod.id == product.id);
 
     if (index >= 0) {
-      _items.removeWhere((prod) => prod.id == product.id);
+      final product = _items[index];
+      _items.remove(product);
       notifyListeners();
+
+      final response = await http.delete(
+        Uri.parse('$urlBase/${product.id}.json'),
+      );
+ 
+      if (response.statusCode >= 400) {
+        _items.insert(index, product);
+        notifyListeners();
+        throw MyHttpException(
+          msg: 'Unable to delete product',
+          statusCode: response.statusCode,
+        );
+      }
     }
   }
 }
-
-// bool _showFavoritesOnly = false;
-
-// List<Product> get items {
-//   if (_showFavoritesOnly) {
-//     return _items.where((product) => product.isFavorite).toList();
-//   }
-//   return [..._items];
-// }
-
-// void showFavoriteOnly() {
-//   _showFavoritesOnly = true;
-//   notifyListeners();
-// }
-
-// void showAll() {
-//   _showFavoritesOnly = false;
-//   notifyListeners();
-// }

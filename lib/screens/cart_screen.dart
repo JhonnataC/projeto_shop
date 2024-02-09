@@ -11,6 +11,7 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final Cart cart = Provider.of<Cart>(context);
     final items = Provider.of<Cart>(context).items.values.toList();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Shopping Cart'),
@@ -44,20 +45,7 @@ class CartScreen extends StatelessWidget {
                     ),
                   ),
                   const Spacer(),
-                  TextButton(
-                    onPressed: () {
-                      Provider.of<OrderList>(context, listen: false)
-                          .addOrder(cart);
-                      cart.clear();
-                    },
-                    child: const Text(
-                      'COMPRAR',
-                      style: TextStyle(
-                        fontFamily: 'Lato',
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
+                  BuyButton(cart: cart),
                 ],
               ),
             ),
@@ -72,5 +60,47 @@ class CartScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class BuyButton extends StatefulWidget {
+  const BuyButton({
+    super.key,
+    required this.cart,
+  });
+
+  final Cart cart;
+
+  @override
+  State<BuyButton> createState() => _BuyButtonState();
+}
+
+class _BuyButtonState extends State<BuyButton> {
+  bool isLoading = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return isLoading
+        ? const CircularProgressIndicator()
+        : TextButton(
+            onPressed: widget.cart.itemsCount == 0
+                ? null
+                : () async {
+                    setState(() => isLoading = true);
+
+                    await Provider.of<OrderList>(context, listen: false)
+                        .addOrder(widget.cart);
+                    widget.cart.clear();
+
+                    setState(() => isLoading = false);
+                  },
+            child: const Text(
+              'BUY',
+              style: TextStyle(
+                fontFamily: 'Lato',
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          );
   }
 }

@@ -7,20 +7,42 @@ import 'package:provider/provider.dart';
 class OrdersScreen extends StatelessWidget {
   const OrdersScreen({super.key});
 
+  Future<void> refreshOrders(BuildContext context) async {
+    return Provider.of<OrderList>(context, listen: false).loadOrders();
+  }
+
   @override
   Widget build(BuildContext context) {
-    OrderList orderList = Provider.of<OrderList>(context);
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Orders'),
       ),
       drawer: const MyDrawer(),
-      body: ListView.builder(
-        itemCount: orderList.itemCount,
-        itemBuilder: (context, i) {
-          return OrderItemWidget(order: orderList.items[i]);
-        },
+      body: RefreshIndicator(
+        onRefresh: () => refreshOrders(context),
+        child: FutureBuilder(
+          future: Provider.of<OrderList>(context).loadOrders(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (snapshot.error != null) {
+              return const Center(
+                child: Text('Error loading orders'),
+              );
+            } else {
+              return Consumer<OrderList>(
+                builder: (context, orders, _) => ListView.builder(
+                  itemCount: orders.itemCount,
+                  itemBuilder: (context, i) {
+                    return OrderItemWidget(order: orders.items[i]);
+                  },
+                ),
+              );
+            }
+          },
+        ),
       ),
     );
   }

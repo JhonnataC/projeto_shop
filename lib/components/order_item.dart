@@ -33,7 +33,7 @@ class _OrderItemWidgetState extends State<OrderItemWidget> {
               style: Theme.of(context).textTheme.bodySmall,
             ),
             trailing: IconButton(
-              icon: const Icon(Icons.expand_more),
+              icon: Icon(_expanded ? Icons.expand_less : Icons.expand_more),
               onPressed: () => setState(() {
                 _expanded = !_expanded;
               }),

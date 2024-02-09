@@ -3,6 +3,7 @@ import 'package:projeto_shop/components/mt_badge.dart';
 import 'package:projeto_shop/components/my_drawer.dart';
 import 'package:projeto_shop/components/product_grid.dart';
 import 'package:projeto_shop/models/cart.dart';
+import 'package:projeto_shop/models/product_list.dart';
 import 'package:projeto_shop/utils/app_routes.dart';
 import 'package:provider/provider.dart';
 
@@ -20,6 +21,19 @@ class ProductsOverviewScreen extends StatefulWidget {
 
 class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
   bool _showFavoriteItems = false;
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<ProductList>(context, listen: false)
+        .loadProducts()
+        .then((value) {
+      setState(() {
+        _isLoading = false;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +41,17 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
       appBar: AppBar(
         title: const Text('My Store'),
         actions: [
+          Consumer<Cart>(
+            child: IconButton(
+              onPressed: () =>
+                  Navigator.of(context).pushNamed(AppRoutes.CART_SCREEN),
+              icon: const Icon(Icons.shopping_cart),
+            ),
+            builder: (context, cart, child) => MyBadge(
+              value: cart.itemsCount.toString(),
+              child: child!,
+            ),
+          ),
           PopupMenuButton(
             itemBuilder: (context) => [
               const PopupMenuItem(
@@ -48,21 +73,12 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
               });
             },
           ),
-          Consumer<Cart>(
-            child: IconButton(
-              onPressed: () =>
-                  Navigator.of(context).pushNamed(AppRoutes.CART_SCREEN),
-              icon: const Icon(Icons.shopping_cart),
-            ),
-            builder: (context, cart, child) => MyBadge(
-              value: cart.itemsCount().toString(),
-              child: child!,
-            ),
-          ),
         ],
       ),
       drawer: const MyDrawer(),
-      body: ProductGrid(_showFavoriteItems),
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : ProductGrid(_showFavoriteItems),
     );
   }
 }
