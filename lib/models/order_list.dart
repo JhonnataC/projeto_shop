@@ -1,11 +1,11 @@
 import 'dart:convert';
 
 import 'package:flutter/widgets.dart';
-import 'package:projeto_shop/models/cart.dart';
-import 'package:projeto_shop/models/cart_item_model.dart';
-import 'package:projeto_shop/models/order.dart';
-import 'package:projeto_shop/utils/constants.dart';
 import 'package:http/http.dart' as http;
+import 'package:shop/models/cart.dart';
+import 'package:shop/models/cart_item_model.dart';
+import 'package:shop/models/order.dart';
+import 'package:shop/utils/constants.dart';
 
 class OrderList with ChangeNotifier {
   final urlBase = Constants.ordersUrlBase;

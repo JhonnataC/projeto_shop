@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_shop/components/my_drawer.dart';
-import 'package:projeto_shop/components/order_item.dart';
-import 'package:projeto_shop/models/order_list.dart';
 import 'package:provider/provider.dart';
+import 'package:shop/components/my_drawer.dart';
+import 'package:shop/components/order_item.dart';
+import 'package:shop/models/order_list.dart';
 
 class OrdersScreen extends StatelessWidget {
   const OrdersScreen({super.key});

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_shop/models/cart.dart';
-import 'package:projeto_shop/models/order_list.dart';
-import 'package:projeto_shop/models/product_list.dart';
-import 'package:projeto_shop/screens/cart_screen.dart';
-import 'package:projeto_shop/screens/orders_screen.dart';
-import 'package:projeto_shop/screens/product_detail_screen.dart';
-import 'package:projeto_shop/screens/product_form_screen.dart';
-import 'package:projeto_shop/screens/products_overview_screen.dart';
-import 'package:projeto_shop/screens/products_screen.dart';
-import 'package:projeto_shop/utils/app_routes.dart';
+import 'package:shop/models/cart.dart';
+import 'package:shop/models/order_list.dart';
+import 'package:shop/models/product_list.dart';
+import 'package:shop/screens/cart_screen.dart';
+import 'package:shop/screens/orders_screen.dart';
+import 'package:shop/screens/product_detail_screen.dart';
+import 'package:shop/screens/product_form_screen.dart';
+import 'package:shop/screens/products_overview_screen.dart';
+import 'package:shop/screens/products_screen.dart';
+import 'package:shop/utils/app_routes.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -34,7 +34,6 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         theme: ThemeData().copyWith(
-          useMaterial3: true,
           appBarTheme: ThemeData().appBarTheme.copyWith(
                 centerTitle: true,
                 backgroundColor: Colors.deepPurple,
