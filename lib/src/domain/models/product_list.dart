@@ -3,9 +3,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:shop/exceptions/http_exception.dart';
-import 'package:shop/models/product.dart';
-import 'package:shop/utils/constants.dart';
+import 'package:shop/src/domain/exceptions/http_exception.dart';
+import 'package:shop/src/domain/models/product.dart';
+import 'package:shop/src/data/utils/constants.dart';
 
 class ProductList with ChangeNotifier {
   final urlBase = Constants.productsUrlBase;

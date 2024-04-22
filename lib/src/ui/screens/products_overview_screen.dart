@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:shop/components/mt_badge.dart';
-import 'package:shop/components/my_drawer.dart';
-import 'package:shop/components/product_grid.dart';
-import 'package:shop/models/cart.dart';
-import 'package:shop/models/product_list.dart';
-import 'package:shop/utils/app_routes.dart';
+import 'package:shop/src/ui/widgets/mt_badge.dart';
+import 'package:shop/src/ui/widgets/my_drawer.dart';
+import 'package:shop/src/ui/widgets/product_grid.dart';
+import 'package:shop/src/domain/models/cart.dart';
+import 'package:shop/src/domain/models/product_list.dart';
+import 'package:shop/src/data/utils/app_routes.dart';
 import 'package:provider/provider.dart';
 
 enum FilterOptions {

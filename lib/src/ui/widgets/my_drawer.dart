@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shop/utils/app_routes.dart';
+import 'package:shop/src/data/utils/app_routes.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});

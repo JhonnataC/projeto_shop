@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shop/providers/counter.dart';
+import 'package:shop/src/ui/providers/counter.dart';
 
 class CounterScreen extends StatefulWidget {
   const CounterScreen({super.key});
