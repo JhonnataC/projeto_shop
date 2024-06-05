@@ -26,14 +26,12 @@ class Product with ChangeNotifier {
     notifyListeners();
   }
 
-  void toggleFavorite() async {
+  void toggleFavorite(String token, String userId) async {
     try {
       _toggleFavorite();
-      final response = await http.patch(
-        Uri.parse('${Constants.productsUrlBase}/$id.json'),
-        body: jsonEncode(
-          {'isFavorite': isFavorite},
-        ),
+      final response = await http.put(
+        Uri.parse('${Constants.favoritesUrlBase}/$userId/$id.json?auth=$token'),
+        body: jsonEncode(isFavorite),
       );
       if (response.statusCode >= 400) {
         _toggleFavorite();

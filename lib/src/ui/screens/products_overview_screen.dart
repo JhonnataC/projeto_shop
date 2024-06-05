@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shop/src/ui/widgets/mt_badge.dart';
+import 'package:shop/src/ui/widgets/my_badge.dart';
 import 'package:shop/src/ui/widgets/my_drawer.dart';
 import 'package:shop/src/ui/widgets/product_grid.dart';
 import 'package:shop/src/domain/models/cart.dart';

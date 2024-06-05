@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shop/src/data/utils/app_routes.dart';
+import 'package:shop/src/domain/models/auth.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
@@ -31,7 +33,7 @@ class MyDrawer extends StatelessWidget {
             Icons.home,
             'Store',
             () => Navigator.of(context).pushReplacementNamed(
-              AppRoutes.HOME_SCREEN,
+              AppRoutes.AUTH_OR_HOME_SCREEN,
             ),
           ),
           const Divider(),
@@ -49,6 +51,17 @@ class MyDrawer extends StatelessWidget {
             () => Navigator.of(context).pushReplacementNamed(
               AppRoutes.PRODUCTS_SCREEN,
             ),
+          ),
+          const Divider(),
+          _itemDrawer(
+            Icons.exit_to_app,
+            'Exit',
+            () {
+              Provider.of<Auth>(context, listen: false).logout();
+              Navigator.of(context).pushReplacementNamed(
+                AppRoutes.AUTH_OR_HOME_SCREEN,
+              );
+            },
           ),
         ],
       ),
