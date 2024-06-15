@@ -110,7 +110,7 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Product Form'),
+        title: const Text('Formulário do Produto'),
         actions: [
           IconButton(
             onPressed: submitForm,
@@ -124,7 +124,7 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CircularProgressIndicator(),
-                  Text('Loading...'),
+                  Text('Carregando...'),
                 ],
               ),
             )
@@ -137,7 +137,7 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
                     TextFormField(
                       initialValue: formData['name']?.toString(),
                       decoration: const InputDecoration(
-                        labelText: 'Name',
+                        labelText: 'Nome',
                         border: UnderlineInputBorder(
                           borderSide: BorderSide(),
                         ),
@@ -153,7 +153,7 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
                         final name = _name ?? '';
 
                         if (name.trim().isEmpty) {
-                          return 'the name is invalid';
+                          return 'Este nome é inválido';
                         }
 
                         return null;
@@ -163,7 +163,7 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
                     TextFormField(
                       initialValue: formData['price']?.toString(),
                       decoration: const InputDecoration(
-                        labelText: 'Price',
+                        labelText: 'Preço',
                         border: UnderlineInputBorder(
                           borderSide: BorderSide(),
                         ),
@@ -183,7 +183,7 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
                         final price = double.tryParse(priceString) ?? -1;
 
                         if (price <= 0) {
-                          return 'price is invalid';
+                          return 'Preço inválido';
                         }
 
                         return null;
@@ -194,7 +194,7 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
                     TextFormField(
                       initialValue: formData['description']?.toString(),
                       decoration: const InputDecoration(
-                        labelText: 'Description',
+                        labelText: 'Descrição',
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.blueGrey),
                         ),
@@ -206,11 +206,11 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
                         final description = _description ?? '';
 
                         if (description.trim().isEmpty) {
-                          return 'description is invalid';
+                          return 'Descrição inválida';
                         }
 
                         if (description.trim().length < 10) {
-                          return 'the description should be longer';
+                          return 'A descrição deveria ser mais longa';
                         }
 
                         return null;
@@ -224,7 +224,7 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
                         Expanded(
                           child: TextFormField(
                             decoration: const InputDecoration(
-                              labelText: 'Image URL',
+                              labelText: 'URL da imagem',
                               enabledBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(color: Colors.blueGrey),
                               ),
@@ -237,7 +237,7 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
                               final imageUrl = _imageUrl ?? '';
 
                               if (!isValidImageUrl(imageUrl)) {
-                                return 'url is invalid';
+                                return 'url inválida';
                               }
 
                               return null;
@@ -259,7 +259,7 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
                           ),
                           alignment: Alignment.center,
                           child: imageUrlController.text.isEmpty
-                              ? const Text('Enter the Url',
+                              ? const Text('Adicione a URL',
                                   style: TextStyle(fontSize: 14))
                               : Image.network(imageUrlController.text),
                         ),

@@ -14,7 +14,7 @@ class CartScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Shopping Cart'),
+        title: const Text('Carrinho'),
       ),
       body: Column(
         children: [
@@ -95,7 +95,7 @@ class _BuyButtonState extends State<BuyButton> {
                     setState(() => isLoading = false);
                   },
             child: const Text(
-              'BUY',
+              'COMPRAR',
               style: TextStyle(
                 fontFamily: 'Lato',
                 fontWeight: FontWeight.bold,

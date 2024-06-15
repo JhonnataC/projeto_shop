@@ -25,13 +25,13 @@ class MyDrawer extends StatelessWidget {
       child: Column(
         children: [
           AppBar(
-            title: const Text('Welcome!'),
+            title: const Text('Bem vindo!'),
             automaticallyImplyLeading: false,
           ),
           const Divider(),
           _itemDrawer(
             Icons.home,
-            'Store',
+            'Loja',
             () => Navigator.of(context).pushReplacementNamed(
               AppRoutes.AUTH_OR_HOME_SCREEN,
             ),
@@ -39,7 +39,7 @@ class MyDrawer extends StatelessWidget {
           const Divider(),
           _itemDrawer(
             Icons.credit_card,
-            'Orders',
+            'Perdidos',
             () => Navigator.of(context).pushReplacementNamed(
               AppRoutes.ORDERS_SCREEN,
             ),
@@ -51,7 +51,7 @@ class MyDrawer extends StatelessWidget {
           const Divider(),
           _itemDrawer(
             Icons.edit,
-            'Manage Products',
+            'Gerenciar Produtos',
             () => Navigator.of(context).pushReplacementNamed(
               AppRoutes.PRODUCTS_SCREEN,
             ),
@@ -59,7 +59,7 @@ class MyDrawer extends StatelessWidget {
           const Divider(),
           _itemDrawer(
             Icons.exit_to_app,
-            'Exit',
+            'Sair',
             () {
               Provider.of<Auth>(context, listen: false).logout();
               Navigator.of(context).pushReplacementNamed(

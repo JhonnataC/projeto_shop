@@ -15,7 +15,7 @@ class OrdersScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My Orders'),
+        title: const Text('Seus pedidos'),
       ),
       drawer: const MyDrawer(),
       body: RefreshIndicator(
@@ -29,7 +29,7 @@ class OrdersScreen extends StatelessWidget {
               );
             } else if (snapshot.error != null) {
               return const Center(
-                child: Text('Error loading orders'),
+                child: Text('Erro ao carregar pedidos'),
               );
             } else {
               return Consumer<OrderList>(

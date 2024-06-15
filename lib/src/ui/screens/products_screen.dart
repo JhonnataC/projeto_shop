@@ -18,7 +18,7 @@ class ProductsScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Manage Products'),
+        title: const Text('Gerenciar Produtos'),
         actions: [
           IconButton(
             onPressed: () =>
