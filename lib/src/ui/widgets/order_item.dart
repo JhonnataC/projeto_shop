@@ -16,33 +16,36 @@ class OrderItemWidget extends StatefulWidget {
 
 class _OrderItemWidgetState extends State<OrderItemWidget> {
   bool _expanded = false;
-
   @override
   Widget build(BuildContext context) {
-    return Card(
-      surfaceTintColor: Colors.white,
-      child: Column(
-        children: [
-          ListTile(
-            title: Text(
-              'R\$ ${widget.order.total.toStringAsFixed(2)}',
-              style: Theme.of(context).textTheme.bodyMedium,
+    final double itemsHeight = (widget.order.products.length * 24) + 10;
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 300),
+      height: _expanded ? itemsHeight + 80 : 80,
+      child: Card(
+        surfaceTintColor: Colors.white,
+        child: Column(
+          children: [
+            ListTile(
+              title: Text(
+                'R\$ ${widget.order.total.toStringAsFixed(2)}',
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+              subtitle: Text(
+                DateFormat('dd/MM/yyyy hh:mm').format(widget.order.date),
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+              trailing: IconButton(
+                icon: Icon(_expanded ? Icons.expand_less : Icons.expand_more),
+                onPressed: () => setState(() {
+                  _expanded = !_expanded;
+                }),
+              ),
             ),
-            subtitle: Text(
-              DateFormat('dd/MM/yyyy hh:mm').format(widget.order.date),
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
-            trailing: IconButton(
-              icon: Icon(_expanded ? Icons.expand_less : Icons.expand_more),
-              onPressed: () => setState(() {
-                _expanded = !_expanded;
-              }),
-            ),
-          ),
-          if (_expanded)
-            Container(
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              height: _expanded ? itemsHeight : 0,
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 4),
-              height: widget.order.products.length * 24 + 5,
               child: ListView(
                 children: widget.order.products.map((prod) {
                   return Row(
@@ -65,7 +68,8 @@ class _OrderItemWidgetState extends State<OrderItemWidget> {
                 }).toList(),
               ),
             ),
-        ],
+          ],
+        ),
       ),
     );
   }

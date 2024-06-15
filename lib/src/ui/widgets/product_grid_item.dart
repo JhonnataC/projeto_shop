@@ -21,7 +21,8 @@ class ProductGridItem extends StatelessWidget {
           backgroundColor: Colors.black87,
           leading: Consumer<Product>(
             builder: (ctx, product, _) => IconButton(
-              onPressed: () => product.toggleFavorite(auth.token ?? '', auth.userId ?? ''),
+              onPressed: () =>
+                  product.toggleFavorite(auth.token ?? '', auth.userId ?? ''),
               splashColor: Colors.redAccent,
               icon: Icon(
                 product.isFavorite ? Icons.favorite : Icons.favorite_border,
@@ -56,9 +57,13 @@ class ProductGridItem extends StatelessWidget {
           ),
         ),
         child: GestureDetector(
-          child: Image.network(
-            product.imageUrl,
-            fit: BoxFit.cover,
+          child: Hero(
+            tag: product.id,
+            child: FadeInImage(
+              placeholder: const AssetImage('assets/imgs/product-placeholder.png'),
+              image: NetworkImage(product.imageUrl),
+              fit: BoxFit.cover,
+            ),
           ),
           onTap: () {
             Navigator.of(context)

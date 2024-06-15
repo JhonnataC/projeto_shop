@@ -43,6 +43,10 @@ class MyDrawer extends StatelessWidget {
             () => Navigator.of(context).pushReplacementNamed(
               AppRoutes.ORDERS_SCREEN,
             ),
+            // Caso a gente quisesse trabalhar de uma forma mais individual
+            // () => Navigator.of(context).pushReplacement(
+            //   CustomRoute(builder: (context) => const OrdersScreen())
+            // ),
           ),
           const Divider(),
           _itemDrawer(

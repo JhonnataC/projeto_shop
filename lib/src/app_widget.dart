@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop/src/data/utils/custom_route.dart';
 import 'package:shop/src/domain/models/auth.dart';
 import 'package:shop/src/domain/models/cart.dart';
 import 'package:shop/src/domain/models/order_list.dart';
@@ -35,7 +36,8 @@ class AppWidget extends StatelessWidget {
         ChangeNotifierProxyProvider<Auth, OrderList>(
           create: (context) => OrderList(),
           update: (context, auth, previous) {
-            return OrderList(auth.token ?? '', auth.userId ?? '', previous?.items ?? []);
+            return OrderList(
+                auth.token ?? '', auth.userId ?? '', previous?.items ?? []);
           },
         ),
         ChangeNotifierProvider(
@@ -70,6 +72,12 @@ class AppWidget extends StatelessWidget {
                   fontSize: 14,
                 ),
               ),
+          pageTransitionsTheme: PageTransitionsTheme(
+            builders: {
+              TargetPlatform.android: CustomPageTransitionBuilder(),
+              TargetPlatform.iOS: CustomPageTransitionBuilder(),
+            },
+          ),
         ),
         debugShowCheckedModeBanner: false,
         routes: {
